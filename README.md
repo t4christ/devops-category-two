@@ -91,7 +91,7 @@ docker ps
 ```
 
 ```sh
-Application is ready to receive connection @ http://localhost:8081
+Application is ready to receive connection @ http://localhost:8080
 ```
 
 ```sh

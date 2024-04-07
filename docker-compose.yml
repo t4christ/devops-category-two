@@ -2,13 +2,36 @@ version: "3"
 services:
   redis:
     image: redis
+    networks:
+      - app-to-db-nw
   app:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/app/app.dockerfile
     container_name: app
     restart: always
-    build: .
     environment:
       - .env
     ports:
       - 8080:8080
     depends_on:
       - redis
+      - simplebankdb
+    networks:
+      - app-to-db-nw
+  simplebankdb:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/postgres/postgres.dockerfile
+    restart: always
+    env_file: .env
+    networks:
+      - app-to-db-nw
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+
+networks:
+  app-to-db-nw:
