@@ -1,0 +1,37 @@
+version: '3'
+services:
+  aluxiondb:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/mysql.dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - aluxiondb_data:/var/lib/mysql
+    networks:
+      - aluxiondb-api
+
+  aluxionapi:
+    build: 
+      context: .
+      dockerfile: infrastructure/docker/api.dockerfile
+    env_file: production.env
+    ports:
+      - 8000:8000
+      # - "3000:3000"
+    depends_on:
+      - aluxiondb
+    networks:
+      - aluxiondb-api
+
+
+networks:
+  aluxiondb-api:
+    driver: bridge
+volumes:
+  aluxiondb_data:
