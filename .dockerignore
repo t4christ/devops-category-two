@@ -1,0 +1,8 @@
+node_modules/
+dist
+makefile
+__tests__
+.env.example
+docker-compose.yml
+yarn.lock
+README.md
