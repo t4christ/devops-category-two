@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d51d3787-dd4b-4e68-b707-59203296b505" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/config.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +153,7 @@
       <workItem from="1713005433140" duration="9953000" />
       <workItem from="1713176426913" duration="31174000" />
       <workItem from="1713700887350" duration="3970000" />
-      <workItem from="1713950151871" duration="11339000" />
+      <workItem from="1713950151871" duration="11696000" />
     </task>
     <servers />
   </component>
