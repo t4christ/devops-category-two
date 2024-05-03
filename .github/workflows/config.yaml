@@ -1,4 +1,4 @@
-name: Build and Publish Docker To Dockerhub assignment
+name: Build and Publish Docker To Dockerhub assignment/
 on:
   push:
     branches: [category-two]
