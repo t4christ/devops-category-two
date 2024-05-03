@@ -1,7 +1,7 @@
 name: Build and Publish Docker To Dockerhub assignment/
 on:
   push:
-    branches: [category-two]
+    branches: [feature/T-1779-pythonapp-githubactionseyi ]
 jobs:
   build-and-push-docker-image:
     name: Build Docker image and push to repositories
