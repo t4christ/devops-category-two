@@ -3,6 +3,7 @@ version: '3.8'
 services:
   db:
     container_name: postgres
+    # image: postgres
     build: 
       context: .
       dockerfile: infrastructure/docker/db/postgres.dockerfile
@@ -16,6 +17,7 @@ services:
       - "5432:5432"
   taskapi:
     container_name: taskapp
+    # image: $IMAGE
     build: 
       context: .
       dockerfile: infrastructure/docker/app/api.dockerfile

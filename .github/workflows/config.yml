@@ -18,6 +18,8 @@ jobs:
         run: |
               cat <<-EOF > .env
               DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
+              POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
+              POSTGRES_USER=${{ secrets.RUST_USER }}
               EOF
 
       # - name: SonarQube Scan

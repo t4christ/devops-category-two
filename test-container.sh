@@ -1,6 +1,7 @@
 #!/bin/bash
 
 test_docker_container(){
+# local image="$1"
 
 echo "Running docker container"
 docker-compose up -d --build --remove-orphans
