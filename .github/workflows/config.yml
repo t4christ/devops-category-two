@@ -35,13 +35,13 @@ jobs:
         run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
 
       - name: Build docker image
-        run: docker build -t texplode/rusttask:${{ steps.version.outputs.date }} -f infrastructure/docker/app/api.dockerfile .
+        run: docker build -t texplode/rusttask:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: texplode/rusttask:${{ steps.version.outputs.date }}
+          image-ref: texplode/rusttask:${{ steps.version.outputs.date }}-${{ github.run_id }}
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -55,4 +55,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASS }}
 
       - name: Push docker image to dockerhub
-        run: docker push texplode/rusttask:${{ steps.version.outputs.date }}
+        run: docker push texplode/rusttask:${{ steps.version.outputs.date }}-${{ github.run_id }}
