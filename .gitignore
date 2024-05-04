@@ -1,3 +1,4 @@
 /target
 docker-compose.yaml
 Dockerfile
+.env
