@@ -32,9 +32,9 @@ jobs:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      # - name: Get current date
-      #   id: version
-      #   run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
+      - name: Get current date
+        id: version
+        run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
 
       - name: Build docker image
         run: docker build -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
