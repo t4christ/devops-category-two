@@ -1,4 +1,4 @@
-name: Build and Publish Docker To Dockerhub assignm
+name: Build and Publish Docker To Dockerhub
 on:
   push:
     branches: [feature/T-1779-pythonapp-githubactionseyi]
