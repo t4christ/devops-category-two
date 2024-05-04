@@ -1,10 +1,10 @@
 #!/bin/bash
 
 test_docker_container(){
-# local image="$1"
+local image="$1"
 
 echo "Running docker container"
-docker-compose up -d --build --remove-orphans
+docker-compose up -e IMAGE=$image -d --build --remove-orphans
 if [ $? -eq 0 ]; then
     echo "Docker run execution succeeded"
 
@@ -33,4 +33,4 @@ fi
 }
 
 echo "Running test container function"
-test_docker_container
+test_docker_container $1

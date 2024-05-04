@@ -3,10 +3,10 @@ version: '3.8'
 services:
   db:
     container_name: postgres
-    # image: postgres
-    build: 
-      context: .
-      dockerfile: infrastructure/docker/db/postgres.dockerfile
+    image: postgres
+    # build: 
+    #   context: .
+    #   dockerfile: infrastructure/docker/db/postgres.dockerfile
     restart: always
     env_file: .env
     networks:
@@ -17,10 +17,10 @@ services:
       - "5432:5432"
   taskapi:
     container_name: taskapp
-    # image: $IMAGE
-    build: 
-      context: .
-      dockerfile: infrastructure/docker/app/api.dockerfile
+    image: $IMAGE
+    # build: 
+    #   context: .
+    #   dockerfile: infrastructure/docker/app/api.dockerfile
     restart: always
     env_file: .env
     depends_on:

@@ -36,8 +36,8 @@ jobs:
       #   id: version
       #   run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
 
-      # - name: Build docker image
-      #   run: docker build -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+      - name: Build docker image
+        run: docker build -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       # - name: Run Trivy vulnerability scanner
@@ -52,13 +52,13 @@ jobs:
 
       - name: Run test on docker container
         run: |
-          chmod +x test-container.sh && sh test-container.sh
+          chmod +x test-container.sh && sh test-container.sh texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASS }}
+      # - name: Login to DockerHub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKER_USER }}
+      #     password: ${{ secrets.DOCKER_PASS }}
 
-      - name: Push docker image to dockerhub
-        run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
+      # - name: Push docker image to dockerhub
+      #   run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
