@@ -1,5 +1,5 @@
 # Use the official Rust image as a base
-FROM rust:slim-buster AS build
+FROM rust:latest AS build
 
 RUN USER=root cargo new --bin task
 
@@ -18,7 +18,7 @@ RUN rm ./target/release/deps/task*
 RUN cargo build --release
 
 # our final base
-FROM rust:slim-buster
+FROM rust:latest
 
 # copy the build artifact from the build stage
 COPY --from=build /task/target/release/task .
