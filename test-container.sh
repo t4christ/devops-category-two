@@ -4,7 +4,7 @@ test_docker_container(){
 local image="$1"
 
 echo "Running docker container"
-docker-compose up -e IMAGE=$image -d --build --remove-orphans
+ IMAGE=$image docker-compose up -d --build --remove-orphans
 if [ $? -eq 0 ]; then
     echo "Docker run execution succeeded"
 
