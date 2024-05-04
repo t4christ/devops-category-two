@@ -73,5 +73,5 @@ jobs:
       run: |
        curl -L https://fly.io/install.sh | sh
        /home/runner/.fly/bin/flyctl auth login --access-token ${{ secrets.FLY_TOKEN }} --password ${{ secrets.FLY_PASSWORD }} --email ${{ secrets.FLY_EMAIL }}
-        /home/runner/.fly/bin/flyctl launch --dockerfile infrastructure/docker/db/postgres.dockerfile -y
-       /home/runner/.fly/bin/flyctl launch --dockerfile infrastructure/docker/app/api.dockerfile -y
+       /home/runner/.fly/bin/flyctl launch --dockerfile infrastructure/docker/db/postgres.dockerfile -o personal -y
+       /home/runner/.fly/bin/flyctl launch --dockerfile infrastructure/docker/app/api.dockerfile -o personal -y
