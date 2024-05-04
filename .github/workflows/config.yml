@@ -72,6 +72,6 @@ jobs:
     - name: Deploy app to fly
       run: |
        curl -L https://fly.io/install.sh | sh
-       /home/runner/.fly/bin/flyctl auth login --access-token ${{ secrets.FLY_TOKEN }} --email ${{ secrets.FLY_EMAIL }}
+       /home/runner/.fly/bin/flyctl auth login --password ${{ secrets.FLY_TOKEN }} --email ${{ secrets.FLY_EMAIL }}
        /home/runner/.fly/bin/flyctl launch
 
