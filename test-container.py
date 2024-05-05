@@ -36,4 +36,4 @@ if __name__ == "__main__":
     endpoint_url = "localhost:35000/health"
     image = sys.argv[1]
 
-    test_container(endpoint_url, image)
+    print(test_container(endpoint_url, image))
