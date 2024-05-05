@@ -6,7 +6,7 @@ import time
 
 def run_container(image):
     try:
-        result = subprocess.run(f"IMAGE={image}docker-compose up -d --remove-orphans", shell=True, capture_output=True, text=True)
+        result = subprocess.run(f"IMAGE={image} docker-compose up -d --remove-orphans", shell=True, capture_output=True, text=True)
         print(f"Result subprocess {result}")
         return result.stdout
     except subprocess.CalledProcessError as e:
