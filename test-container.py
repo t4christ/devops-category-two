@@ -4,9 +4,9 @@ import sys
 import time
 
 
-def run_container(image):
+def run_container():
     try:
-        result = subprocess.run(f"IMAGE={image} docker-compose up -d --remove-orphans", shell=True, capture_output=True, text=True)
+        result = subprocess.run(f"docker-compose up -d --remove-orphans", shell=True, capture_output=True, text=True)
         print(f"Result subprocess {result}")
         return result.stdout
     except subprocess.CalledProcessError as e:
@@ -14,9 +14,9 @@ def run_container(image):
         return None
 
 
-def test_container(endpoint_url,image):
+def test_container(endpoint_url):
     try:
-        output = run_container(image)
+        output = run_container()
         if output:
             time.sleep(5)
             response = requests.get(endpoint_url)
@@ -30,11 +30,7 @@ def test_container(endpoint_url,image):
         print(f"Error: {e}")
 
 if __name__ == "__main__":
-    if len(sys.argv) !=2:
-        print("Usage: python test-container.py image")
-        sys.exit(1)
-    
-    endpoint_url = "localhost:35000/health"
-    image = sys.argv[0]
 
-    print(test_container(endpoint_url, image))
+    endpoint_url = "localhost:35000/health"
+
+    print(test_container(endpoint_url))
