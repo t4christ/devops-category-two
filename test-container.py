@@ -7,6 +7,7 @@ import time
 def run_container(image):
     try:
         result = subprocess.run(f"IMAGE={image}docker-compose up -d --remove-orphans", shell=True, capture_output=True, text=True)
+        print(f"Result subprocess {result}")
         return result.stdout
     except subprocess.CalledProcessError as e:
         print(f"Error running docker-compse command: {e}")
@@ -34,6 +35,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     endpoint_url = "localhost:35000/health"
-    image = sys.argv[1]
+    image = sys.argv[0]
 
     print(test_container(endpoint_url, image))
