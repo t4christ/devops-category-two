@@ -10,7 +10,7 @@ def run_container(image):
         print(f"Result subprocess {result}")
         return result.stdout
     except subprocess.CalledProcessError as e:
-        print(f"Error running docker-compse command: {e}")
+        print(f"Error running docker-compose command: {e}")
         return None
 
 
@@ -25,7 +25,7 @@ def test_container(endpoint_url,image):
                 print("Endpoint request was successful")
                 return True
             else:
-                print("Endpoint did not return status code od 200. Request failed")
+                print("Endpoint did not return status code 200. Request failed")
     except Exception as e:
         print(f"Error: {e}")
 
