@@ -15,6 +15,7 @@ jobs:
 
       - name: Initialise Terraform
         run: |
+              mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
               cat <<EOF > ~/.aws/config
               [profile terraform-ctwo]
               region = us-east-1
