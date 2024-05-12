@@ -27,7 +27,8 @@ jobs:
               aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
               EOF
 
+              cd terraform 
               terraform init
               terraform fmt
               terraform validate
-              terraform plan
+              terraform plan --out initial.plan
