@@ -4,3 +4,5 @@
 *.lock.hcl
 backend.tf
 setup.sh
+ec2.tf
+output.tf
