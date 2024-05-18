@@ -1,0 +1,27 @@
+name: Setup Terraform and Provision
+on:
+  push:
+    branches: [feature/T-1617-Terraform-pipeline]
+jobs:
+  init_and_plan_terraform:
+    name: Init And Plan Terraform
+    runs-on: ubuntu-latest
+    outputs:
+      output: ${{ steps.version.outputs.date}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  
+
+      - name: terraform init
+        run: terraform init
+
+      - name: terraform plan
+        run: terraform plan
+          
