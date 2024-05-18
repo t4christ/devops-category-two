@@ -1,7 +1,7 @@
 name: Setup Terraform and Provision
 on:
   push:
-    branches: [feature/T-1617-Terraform-pipeline]
+    branches: [feature/T-2016-terraform-pipeline]
 jobs:
   init_and_plan_terraform:
     name: Init And Plan Terraform
