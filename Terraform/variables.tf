@@ -31,7 +31,7 @@ variable "db_user" {
 variable "db_password" {
   description = "The password for the PostgreSQL database"
 }
-
+#Comment to test github actions
 variable "db_instance_class" {
   description = "The instance class for RDS"
   default     = "db.t3.micro"
