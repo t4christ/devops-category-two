@@ -38,7 +38,7 @@ resource "aws_security_group" "instance" {
   }
 }
 
-# Keypair creation
+# Keypair creation ggb
 resource "aws_key_pair" "deployer"{
     key_name   = "deployer-key"
     public_key = file("/Users/dibaalakari/.ssh/id_rsa.pub")
