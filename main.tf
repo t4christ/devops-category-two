@@ -41,8 +41,9 @@ resource "aws_security_group" "instance" {
 # Keypair creation
 resource "aws_key_pair" "deployer"{
     key_name   = "deployer-key"
-    public_key = file("/home/dibaalakari/.ssh/id_rsa.pub")
+    public_key = file("/Users/dibaalakari/.ssh/id_rsa.pub")
 }
+
 
 # EC2 Instance
 resource "aws_instance" "web" {
