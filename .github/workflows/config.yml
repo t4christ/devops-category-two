@@ -8,7 +8,7 @@ on:
       - feature/T-1234-dataops
 
 jobs:
-  etl:
+  extract-tramsform-and-load:
     runs-on: ubuntu-latest
 
     steps:

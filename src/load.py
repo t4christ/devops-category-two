@@ -1,4 +1,5 @@
-import os
+import os, sys
+import panda as pd
 from transform import transform_data
 from extract import extract_data
 from sqlalchemy import create_engine
