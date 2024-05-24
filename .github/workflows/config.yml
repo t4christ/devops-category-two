@@ -1,77 +1,11 @@
-name: Build and Publish
-
-on:
-  push:
-    branches: [feature/T-5589-build-rust]
-    
-jobs:
-  build-and-push-docker-image:
-    name: Build Docker image and push to repositories
-    runs-on: ubuntu-latest
-    outputs:
-      output: ${{ steps.version.outputs.date }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Create env for rust app
-        run: |
-              cat <<-EOF > .env
-              DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
-              POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
-              POSTGRES_USER=${{ secrets.RUST_USER }}
-              EOF
-
-      # - name: SonarQube Scan
-      #   uses: sonarsource/sonarqube-scan-action@master
-      #   with:
-      #     args: >
-      #       -Dsonar.rust.clippy.reportPaths=sample-report.json
-      #       -Dsonar.verbose=true
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
-      - name: Get current date
-        id: version
-        run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
-
-      # - name: Build docker image
-      #   run: docker build -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
-
-
-      # - name: Run Trivy vulnerability scanner
-      #   uses: aquasecurity/trivy-action@master
-      #   with:
-      #     image-ref: texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
-      #     format: 'table'
-      #     exit-code: '1'
-      #     ignore-unfixed: true
-      #     vuln-type: '*'
-      #     severity: 'CRITICAL'
-
-      - name: Run test on docker container
-        run: |
-          # chmod +x test-container.sh
-          python3 test-container.py
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKER_USER }}
-      #     password: ${{ secrets.DOCKER_PASS }}
-
-      # - name: Push docker image to dockerhub
-      #   run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
-
-
 name: ETL Pipeline
 
 on:
-  schedule:
-    - cron: "0 0 * * *" # Runs every day at midnight
+  # schedule:
+  #   - cron: "0 0 * * *" # Runs every day at midnight
   push:
     branches:
-      - main
+      - feature/T-1234-dataops
 
 jobs:
   etl:
