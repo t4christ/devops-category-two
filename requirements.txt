@@ -1,4 +1,4 @@
-sqlachemy
+sqlalchemy
 psycopg2-binary
 pandas
 openpyxl
