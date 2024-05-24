@@ -23,6 +23,12 @@ def load_data(data):
         engine = create_engine(db_url)
         data.to_sql(cleaned_data_table_name, engine, if_exists='replace', index=False)
         print("Successfully loaded cleaned data into database")
+
+        print("Display Cleaned Data In Database")
+
+        query = f"SELECT * FROM {cleaned_data_table_name}"
+        cleaned_data = pd.read_sql(query, engine)
+        print(cleaned_data.iloc[:])
     except Exception as e:
         print(f"Error loading cleaned data into db {e}")
         sys.exit(1)
