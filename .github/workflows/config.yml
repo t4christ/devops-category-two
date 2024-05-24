@@ -40,5 +40,8 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: Load Data To Db
+      run: python src/initial_load.py
+
     - name: Run ETL script
       run: python src/load.py
