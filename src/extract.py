@@ -14,6 +14,6 @@ def extract_data():
     # Create the database connection
     db_url = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
     engine = create_engine(db_url)
-    query = "SELECT * FROM bondmovies"
+    query = f"SELECT * FROM {table_name}"
     df = pd.read_sql(query, engine)
     return df
