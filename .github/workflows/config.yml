@@ -14,13 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Create env for rust app
-        run: |
-              cat <<-EOF > .env
-              DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
-              POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
-              POSTGRES_USER=${{ secrets.RUST_USER }}
-              EOF
+      # - name: Create env for rust app
+      #   run: |
+      #         cat <<-EOF > .env
+      #         DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
+      #         POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
+      #         POSTGRES_USER=${{ secrets.RUST_USER }}
+      #         EOF
 
       # - name: SonarQube Scan
       #   uses: sonarsource/sonarqube-scan-action@master
@@ -36,8 +36,8 @@ jobs:
         id: version
         run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
 
-      # - name: Build docker image
-      #   run: docker build -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+      - name: Build docker image
+        run: docker build -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       # - name: Run Trivy vulnerability scanner
@@ -54,11 +54,11 @@ jobs:
         run: |
           # chmod +x test-container.sh
           python3 test-container.py
-      # - name: Login to DockerHub
-      #   uses: docker/login-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKER_USER }}
-      #     password: ${{ secrets.DOCKER_PASS }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
 
-      # - name: Push docker image to dockerhub
-      #   run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
+      - name: Push docker image to dockerhub
+        run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}

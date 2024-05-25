@@ -23,11 +23,13 @@ FROM rust:latest
 # copy the build artifact from the build stage
 COPY --from=build /task/target/release/task .
 
-COPY start.sh  .
+# COPY start.sh  .
 
-RUN  chmod +x start.sh
+# RUN  chmod +x start.sh
 
 EXPOSE 3500
 # set the startup command to run your binary
 
-ENTRYPOINT "./start.sh"
+# ENTRYPOINT "./start.sh"
+
+CMD ["./task"]
