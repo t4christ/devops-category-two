@@ -30,11 +30,12 @@ jobs:
             echo "CLEANED_TABLE_NAME=${{ secrets.CLEANED_TABLE_NAME }}" >> $GITHUB_ENV
             mkdir ~/.aws && touch ~/.aws/config && touch ~/.aws/credentials
             cat <<EOF > ~/.aws/config
-            [profile bucket]
+            [profile default]
             region = us-east-1
             EOF
+            
             cat <<EOF > ~/.aws/credentials
-            [bucket]
+            [default]
             aws_access_key_id="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
             aws_secret_access_key="${{ secrets.AWS_SECRET_ACCESS_KEY }}""
             EOF
