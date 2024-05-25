@@ -45,6 +45,6 @@ def upload_file_to_s3(file_name, bucket_name, object_name=None, region='us-east-
 # Example usage
 if __name__ == "__main__":
     file_name = f"{os.environ.get('CLEANED_TABLE_NAME')}.csv"
-    bucket_name = 'movie-etl'
+    bucket_name = 'bondmovie-etl'
     region = 'us-east-1'  # Specify your region
     upload_file_to_s3(file_name, bucket_name, region=region)
