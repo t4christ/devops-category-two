@@ -23,7 +23,11 @@ def load_data(data):
         db_url = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
         engine = create_engine(db_url)
         data.to_sql(cleaned_data_table_name, engine, if_exists='replace', index=False)
+        
         print("Successfully loaded cleaned data into database")
+
+        data.to_csv(f"{cleaned_data_table_name}.csv", index=False)
+        print("Successfully loaded cleaned data into csv")
 
         print("Display Cleaned Data In Database")
 
