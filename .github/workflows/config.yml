@@ -31,8 +31,8 @@ jobs:
             mkdir ~/.aws && touch ~/.aws/credentials
             cat <<EOF > ~/.aws/credentials
             [default]
-            aws_access_key_id = ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws_access_key_id=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}
             EOF
     - name: Run Postgresdb 
       run: |
