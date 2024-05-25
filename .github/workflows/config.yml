@@ -52,5 +52,5 @@ jobs:
 
     - name: Upload to S3 bucket
       run: |
-      cat ~/.aws/credentials
-      python src/upload_to_s3.py
+          cat ~/.aws/credentials
+          python src/upload_to_s3.py
