@@ -27,10 +27,7 @@ def upload_file_to_s3(file_name, bucket_name, object_name=None, region='us-east-
         # If a client error is thrown, then the bucket does not exist
         print(f"Bucket {bucket_name} does not exist. Creating bucket.")
         try:
-            s3_client.create_bucket(
-                Bucket=bucket_name,
-                CreateBucketConfiguration={'LocationConstraint': region}
-            )
+            s3_client.create_bucket(Bucket=bucket_name)
             print(f"Bucket {bucket_name} created.")
         except botocore.exceptions.ClientError as e:
             print(f"Error creating bucket: {e}")
