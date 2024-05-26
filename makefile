@@ -8,13 +8,13 @@ all: run down down_volume
 .SILENT: run 
 
 run:
-	 docker-compose up -d --build
+	 docker compose up -d --build
 down:
-	 docker-compose down --remove-orphans 
+	 docker compose down --remove-orphans 
 
 down_volume:
-	 docker-compose down --remove-orphans --volumes
+	 docker compose down --remove-orphans --volumes
 
 
 down_app:
-	docker-compose down app --remove-orphans
+	docker compose down app --remove-orphans
