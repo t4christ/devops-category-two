@@ -1,7 +1,7 @@
 # Use the official Rust image as a base
 FROM rust:latest AS build
 
-# RUN USER=root cargo new --bin task
+RUN USER=root cargo new --bin task
 
 WORKDIR /task
 
