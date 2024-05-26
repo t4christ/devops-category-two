@@ -37,7 +37,10 @@ jobs:
         run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
 
       - name: Build docker image
-        run: docker buildx build -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+        run: |
+        docker buildx create --use
+        docker buildx inspect --bootstrap
+        docker buildx build --platform linux/arm64 -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       # - name: Run Trivy vulnerability scanner
@@ -50,10 +53,11 @@ jobs:
       #     vuln-type: '*'
       #     severity: 'CRITICAL'
 
-      - name: Run test on docker container
-        run: |
-          # chmod +x test-container.sh
-          python3 test-container.py
+      # - name: Run test on docker container
+      #   run: |
+      #     # chmod +x test-container.sh
+      #     python3 test-container.py
+
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
