@@ -38,9 +38,9 @@ jobs:
 
       - name: Build docker image
         run: |
-        docker buildx create --use
-        docker buildx inspect --bootstrap
-        docker buildx build --platform linux/arm64 -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+            docker buildx create --use
+            docker buildx inspect --bootstrap
+            docker buildx build --platform linux/arm64 -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       # - name: Run Trivy vulnerability scanner
