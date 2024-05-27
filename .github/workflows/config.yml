@@ -38,7 +38,7 @@ jobs:
 
       - name: Build docker image
         run: |
-
+            docker buildx create --name armbuilder
             docker buildx build  -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
