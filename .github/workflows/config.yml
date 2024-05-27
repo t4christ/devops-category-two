@@ -42,7 +42,7 @@ jobs:
       - name: Build docker image
         run: |
             docker buildx create --name armbuilder
-            docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+            docker buildx build --platform linux/arm64 -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       # - name: Run Trivy vulnerability scanner
