@@ -103,3 +103,10 @@ jobs:
           terraform workspace new dev
           terraform init
           terraform apply ../../eks.plan
+          zip terraform.tfstate.d.zip terraform.tfstate.d
+
+      - name: Upload eks state for approval
+        uses: actions/upload-artifact@v4
+        with:
+          name: eks-state
+          path: devops-category-two/eks-cluster/terraform.tfstate.d.zip
