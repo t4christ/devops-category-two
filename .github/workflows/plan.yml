@@ -39,26 +39,26 @@ jobs:
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
-              zip terraform.tfstate.d.zip terraform.tfstate.d
+              cd ../../ && zip terraform.zip devops-category-two/eks-cluster
               ls .
 
       - name: Upload eks plan for approval
         uses: actions/upload-artifact@v4
         with:
           name: eksplan
-          path: devops-category-two/eks-cluster/eks.plan
+          path: terraform.zip
 
-      - name: Upload state file
-        uses: actions/upload-artifact@v4
-        with:
-          name: eks-state
-          path: devops-category-two/eks-cluster/terraform.tfstate.d.zip
+      # - name: Upload state file
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: eks-state
+      #     path: devops-category-two/eks-cluster/terraform.tfstate.d.zip
 
-      - name: Upload state file lock
-        uses: actions/upload-artifact@v4
-        with:
-          name: eks-state-lock
-          path: devops-category-two/eks-cluster/.terraform.lock.hcl
+      # - name: Upload state file lock
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: eks-state-lock
+      #     path: devops-category-two/eks-cluster/.terraform.lock.hcl
 
   terraform_approve:
     name: Apply Terraform Plan
@@ -97,17 +97,18 @@ jobs:
         with:
           name: eksplan
 
-      - name: Download eks-state
-        uses: actions/download-artifact@v4
-        with:
-          name: eks-state
+      # - name: Download eks-state
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: eks-state
 
-      - name: Download eks-state-lock
-        uses: actions/download-artifact@v4
-        with:
-          name: eks-state-lock
+      # - name: Download eks-state-lock
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: eks-state-lock
 
       - name: Terraform Apply
         run: |
-          unzip terraform.tfstate.d.zip
-          terraform apply eks.plan
+          unzip terraform.zip
+          ls terraform
+          terraform apply eks-cluster/eks.plan
