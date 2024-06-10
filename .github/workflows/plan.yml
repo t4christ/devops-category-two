@@ -39,6 +39,7 @@ jobs:
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
+              zip terraform.tfstate.d.zip terraform.tfstate.d
               ls .
 
       - name: Upload eks plan for approval
@@ -51,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: eks-state
-          path: devops-category-two/eks-cluster/terraform.tfstate.d
+          path: devops-category-two/eks-cluster/terraform.tfstate.d.zip
 
   terraform_approve:
     name: Apply Terraform Plan
@@ -96,4 +97,6 @@ jobs:
           name: eks-state
 
       - name: Terraform Apply
-        run: terraform apply eks.plan
+        run: |
+          unzip terraform.tfstate.d.zip
+          terraform apply eks.plan
