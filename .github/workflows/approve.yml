@@ -1,0 +1,37 @@
+name: Terraform Apply
+
+on:
+  workflow_run:
+    workflows: ["Init and Plan"]
+    types:
+      - completed
+
+jobs:
+  approve:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Apply Terraform Plan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          approvers: t4christ
+      - name: Terraform Auth Config
+        run: |
+              mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
+              cat <<EOF > ~/.aws/config
+              [profile terraform-ctwo]
+              region = us-east-1
+              EOF
+
+              cat <<EOF > ~/.aws/credentials
+              [terraform-ctwo]
+              aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+              EOF
+
+      - name: Restore Plan Output
+        id: restore-plan
+        run: echo "${{ fromJson(steps.save-plan.outputs.eksplan) }}" | base64 -d > eksplan
+      
+      - name: Terraform Apply
+        run: terraform apply eksplan
