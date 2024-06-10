@@ -18,7 +18,6 @@ jobs:
           GITLAB_ACCESS_TOKEN: ${{ secrets.PAT }}
         run: |
           git clone -b feature/T-1112-terraform-eks https://oauth2:${{ secrets.PAT }}@gitlab.com/t4christ/devops-category-two.git
-          ls devops-category-two
           # If you want to move the repository to a specific directory, you can use:
           # git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/<your-gitlab-username>/<your-gitlab-repo>.git <directory-name>
 
@@ -36,7 +35,8 @@ jobs:
               aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
               EOF
 
-              cd devops-category-two/eks-cluster 
+              cd devops-category-two/eks-cluster
+              terraform workspace new dev
               terraform init
               terraform fmt
               terraform validate
