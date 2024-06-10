@@ -46,6 +46,12 @@ jobs:
           name: eksplan
           path: devops-category-two/eks-cluster/eks.plan
 
+      - name: Upload state file
+        uses: actions/upload-artifact@v4
+        with:
+          name: eks-state
+          path: devops-category-two/eks-cluster/terraform*
+
   terraform_approve:
     name: Apply Terraform Plan
     runs-on: ubuntu-latest
