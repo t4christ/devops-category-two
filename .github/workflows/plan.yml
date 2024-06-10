@@ -56,6 +56,13 @@ jobs:
       - uses: trstringer/manual-approval@v1
         with:
           approvers: t4christ
+          secret: ${{ github.TOKEN }}
+          minimum-approvals: 1
+          issue-title: "Approving terraform apply for eks plan"
+          issue-body: "Please approve or deny terraform apply"
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
       - name: Terraform Auth Config
         run: |
               mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
