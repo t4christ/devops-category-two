@@ -42,11 +42,11 @@ jobs:
               terraform validate
               terraform plan --out eks.plan
 
-      - name: Upload eks plan for approval
-        uses: actions/upload-artifact@v4
-        with:
-          name: eksplan
-          path: devops-category-two/eks-cluster/eks.plan
+      # - name: Upload eks plan for approval
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: eksplan
+      #     path: devops-category-two/eks-cluster/eks.plan
 
   terraform_approve:
     name: Apply Terraform Plan
