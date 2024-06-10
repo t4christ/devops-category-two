@@ -85,6 +85,6 @@ jobs:
 
       - name: Terraform Apply
         run: |
-        ls .
-        ls devops-category-two
-        terraform apply eksplan
+          ls .
+          ls devops-category-two
+          terraform apply eksplan
