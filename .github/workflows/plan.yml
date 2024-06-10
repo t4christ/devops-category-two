@@ -121,6 +121,7 @@ jobs:
 
       - name: Terraform Apply
         run: |
+          terraform init
           unzip terraform.tfstate.d.zip
           unzip provider.zip
           ls .
