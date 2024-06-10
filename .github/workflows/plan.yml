@@ -101,4 +101,4 @@ jobs:
         run: |
           cd devops-category-two/eks-cluster
           terraform init
-          terraform apply eks.plan
+          terraform apply ../../eks.plan
