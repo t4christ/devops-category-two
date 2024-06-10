@@ -63,6 +63,7 @@ jobs:
           exclude-workflow-initiator-as-approver: false
           additional-approved-words: ''
           additional-denied-words: ''
+
       - name: Terraform Auth Config
         run: |
               mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
@@ -83,4 +84,7 @@ jobs:
           name: eksplan
 
       - name: Terraform Apply
-        run: terraform apply eksplan
+        run: |
+        ls .
+        ls devops-category-two
+        terraform apply eksplan
