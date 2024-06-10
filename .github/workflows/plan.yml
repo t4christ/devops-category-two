@@ -57,7 +57,7 @@ jobs:
       - name: Upload state file lock
         uses: actions/upload-artifact@v4
         with:
-          name: eks-state
+          name: eks-state-lock
           path: devops-category-two/eks-cluster/.terraform.lock.hcl
 
   terraform_approve:
