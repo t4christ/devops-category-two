@@ -47,10 +47,13 @@ jobs:
         with:
           name: eksplan
           path: devops-category-two/eks-cluster/eks.plan
+
   approve:
-      if: needs.init_and_plan_terraform.result == 'success'
       name: Apply Terraform Plan
       runs-on: ubuntu-latest
+      needs:
+        - init_and_plan_terraform
+      if: needs.init_and_plan_terraform.result == 'success'
       steps:
         - uses: trstringer/manual-approval@v1
           with:
