@@ -39,14 +39,14 @@ jobs:
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
-              cd ../../ && zip terraform.zip devops-category-two/eks-cluster
+              zip terraform.zip ./*
               ls .
 
       - name: Upload eks plan for approval
         uses: actions/upload-artifact@v4
         with:
           name: eksplan
-          path: terraform.zip
+          path: devops-category-two/eks-cluster/terraform.zip
 
       # - name: Upload state file
       #   uses: actions/upload-artifact@v4
@@ -110,5 +110,5 @@ jobs:
       - name: Terraform Apply
         run: |
           unzip terraform.zip
-          ls devops-category-two/eks-cluster/
-          terraform apply devops-category-two/eks-cluster/eks.plan
+          ls .
+          terraform apply eks.plan
