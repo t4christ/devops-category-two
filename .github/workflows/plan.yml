@@ -102,7 +102,7 @@ jobs:
       - name: Download eksplan
         uses: actions/download-artifact@v4
         with:
-          name: eksplan
+          name: eks-plan
 
       - name: Download eks-provider
         uses: actions/download-artifact@v4
