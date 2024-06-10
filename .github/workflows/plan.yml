@@ -7,8 +7,6 @@ jobs:
   init_and_plan_terraform:
     name: Init And Plan Terraform
     runs-on: ubuntu-latest
-    outputs:
-      output: ${{ steps.version.outputs.date }}
     steps:
       - name: Checkout GitHub repository
         uses: actions/checkout@v3
@@ -42,11 +40,11 @@ jobs:
               terraform validate
               terraform plan --out eks.plan
 
-      # - name: Upload eks plan for approval
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: eksplan
-      #     path: devops-category-two/eks-cluster/eks.plan
+      - name: Upload eks plan for approval
+        uses: actions/upload-artifact@v4
+        with:
+          name: eksplan
+          path: devops-category-two/eks-cluster/eks.plan
 
   terraform_approve:
     name: Apply Terraform Plan
@@ -72,10 +70,10 @@ jobs:
               aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
               EOF
 
-    - name: Download eksplan
-      uses: actions/download-artifact@v4
-      with:
-        name: eksplan
+      - name: Download eksplan
+        uses: actions/download-artifact@v4
+        with:
+          name: eksplan
 
-    - name: Terraform Apply
-      run: terraform apply eksplan
+      - name: Terraform Apply
+        run: terraform apply eksplan
