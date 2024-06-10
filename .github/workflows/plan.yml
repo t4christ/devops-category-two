@@ -19,7 +19,7 @@ jobs:
         run: |
           git clone https://oauth2:${{ secrets.PAT }}@gitlab.com/t4christ/devops-category-two.git
           git checkout feature/T-1112-terraform-eks
-          ls devops-category-two && ls devops-category-two/eks-cluster
+          ls devops-category-two
           # If you want to move the repository to a specific directory, you can use:
           # git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/<your-gitlab-username>/<your-gitlab-repo>.git <directory-name>
 
