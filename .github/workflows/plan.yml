@@ -49,33 +49,33 @@ jobs:
           path: devops-category-two/eks-cluster/eks.plan
 
   approve:
-      name: Apply Terraform Plan
-      runs-on: ubuntu-latest
-      needs:
-        - init_and_plan_terraform
-      if: needs.init_and_plan_terraform.result == 'success'
-      steps:
-        - uses: trstringer/manual-approval@v1
-          with:
-            approvers: t4christ
-        - name: Terraform Auth Config
-          run: |
-                mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
-                cat <<EOF > ~/.aws/config
-                [profile terraform-ctwo]
-                region = us-east-1
-                EOF
-
-                cat <<EOF > ~/.aws/credentials
-                [terraform-ctwo]
-                aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
-                aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-                EOF
-
-      - name: Download eksplan
-        uses: actions/download-artifact@v4
+    name: Apply Terraform Plan
+    runs-on: ubuntu-latest
+    needs:
+      - init_and_plan_terraform
+    if: needs.init_and_plan_terraform.result == 'success'
+    steps:
+      - uses: trstringer/manual-approval@v1
         with:
-          name: eksplan
+          approvers: t4christ
+      - name: Terraform Auth Config
+        run: |
+              mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
+              cat <<EOF > ~/.aws/config
+              [profile terraform-ctwo]
+              region = us-east-1
+              EOF
 
-      - name: Terraform Apply
-        run: terraform apply eksplan
+              cat <<EOF > ~/.aws/credentials
+              [terraform-ctwo]
+              aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+              EOF
+
+    - name: Download eksplan
+      uses: actions/download-artifact@v4
+      with:
+        name: eksplan
+
+    - name: Terraform Apply
+      run: terraform apply eksplan
