@@ -124,5 +124,6 @@ jobs:
           terraform init
           unzip terraform.tfstate.d.zip
           unzip provider.zip
-          ls .
+          ls .terraform
+          ls -ah .
           terraform apply eks.plan
