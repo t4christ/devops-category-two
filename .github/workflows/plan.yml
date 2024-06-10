@@ -4,49 +4,49 @@ on:
   push:
     branches: [feature/T-1112-terraform-eks]
 jobs:
-  init_and_plan_terraform:
-    name: Init And Plan Terraform
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout GitHub repository
-        uses: actions/checkout@v3
+  # init_and_plan_terraform:
+  #   name: Init And Plan Terraform
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout GitHub repository
+  #       uses: actions/checkout@v3
 
-      - name: Clone GitLab repository
-        env:
-          GITLAB_ACCESS_TOKEN: ${{ secrets.PAT }}
-        run: |
-          git clone -b feature/T-1112-terraform-eks https://oauth2:${{ secrets.PAT }}@gitlab.com/t4christ/devops-category-two.git
-          # If you want to move the repository to a specific directory, you can use:
-          # git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/<your-gitlab-username>/<your-gitlab-repo>.git <directory-name>
+  #     - name: Clone GitLab repository
+  #       env:
+  #         GITLAB_ACCESS_TOKEN: ${{ secrets.PAT }}
+  #       run: |
+  #         git clone -b feature/T-1112-terraform-eks https://oauth2:${{ secrets.PAT }}@gitlab.com/t4christ/devops-category-two.git
+  #         # If you want to move the repository to a specific directory, you can use:
+  #         # git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/<your-gitlab-username>/<your-gitlab-repo>.git <directory-name>
 
-      - name: Initialise Terraform
-        run: |
-              mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
-              cat <<EOF > ~/.aws/config
-              [profile terraform-ctwo]
-              region = us-east-1
-              EOF
+  #     - name: Initialise Terraform
+  #       run: |
+  #             mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
+  #             cat <<EOF > ~/.aws/config
+  #             [profile terraform-ctwo]
+  #             region = us-east-1
+  #             EOF
 
-              cat <<EOF > ~/.aws/credentials
-              [terraform-ctwo]
-              aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
-              aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-              EOF
+  #             cat <<EOF > ~/.aws/credentials
+  #             [terraform-ctwo]
+  #             aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #             aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+  #             EOF
 
-              cd devops-category-two/eks-cluster
-              terraform workspace new dev
-              terraform init
-              terraform fmt
-              terraform validate
-              terraform plan --out eks.plan
-              ls .
+  #             cd devops-category-two/eks-cluster
+  #             terraform workspace new dev
+  #             terraform init
+  #             terraform fmt
+  #             terraform validate
+  #             terraform plan --out eks.plan
+  #             ls .
 
 
-      - name: Upload eks plan for approval
-        uses: actions/upload-artifact@v4
-        with:
-          name: eks-plan
-          path: devops-category-two/eks-cluster/eks.plan
+  #     - name: Upload eks plan for approval
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: eks-plan
+  #         path: devops-category-two/eks-cluster/eks.plan
 
   terraform_approve:
     name: Apply Terraform Plan
@@ -96,14 +96,20 @@ jobs:
         with:
           name: eks-plan
 
+      - name: Download eksstate
+        uses: actions/download-artifact@v4
+        with:
+          name: eks-state
 
       - name: Terraform Apply
         run: |
           cd devops-category-two/eks-cluster
           terraform workspace new dev
           terraform init
-          terraform apply ../../eks.plan
-          zip terraform.tfstate.d.zip terraform.tfstate.d
+          unzip terraform.tfstate.d.zip
+          terraform destroy --auto-approve
+          # terraform apply ../../eks.plan
+          # zip terraform.tfstate.d.zip terraform.tfstate.d
 
       - name: Upload eks artifact state for approval
         uses: actions/upload-artifact@v4
