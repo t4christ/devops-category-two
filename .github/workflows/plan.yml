@@ -39,6 +39,7 @@ jobs:
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
+              ls .
 
       - name: Upload eks plan for approval
         uses: actions/upload-artifact@v4
