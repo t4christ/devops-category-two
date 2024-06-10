@@ -121,6 +121,7 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          unzip terraform.zip
+          unzip terraform.tstate.d.zip
+          unzip provider.zip
           ls .
           terraform apply eks.plan
