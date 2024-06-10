@@ -48,7 +48,7 @@ jobs:
           name: eksplan
           path: devops-category-two/eks-cluster/eks.plan
 
-  approve:
+  terraform_approve:
     name: Apply Terraform Plan
     runs-on: ubuntu-latest
     needs:
