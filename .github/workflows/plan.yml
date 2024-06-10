@@ -110,4 +110,5 @@ jobs:
       - name: Terraform Apply
         run: |
           unzip terraform.zip
+          ls devops-category-two/eks-cluster/
           terraform apply devops-category-two/eks-cluster/eks.plan
