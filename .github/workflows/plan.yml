@@ -41,7 +41,8 @@ jobs:
               terraform fmt
               terraform validate
               terraform plan --out eksplan
+      - name: Save state
+        run: echo "{eksplan}={eksplan}" >> $GITHUB_STATE
 
-      - name: Save Plan Output
-        id: save-plan
-        run: echo "::set-output name=eksplan::$(base64 eksplan)"
+      - name: Set output
+        run: echo "{eksplan}={eksplan}" >> $GITHUB_OUTPUT
