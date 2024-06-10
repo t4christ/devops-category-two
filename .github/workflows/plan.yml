@@ -39,27 +39,8 @@ jobs:
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
-              zip provider.zip .terraform
-              zip terraform.tfstate.d.zip terraform.tfstate.d
               ls .
 
-      - name: Upload eks plan for approval
-        uses: actions/upload-artifact@v4
-        with:
-          name: eks-state
-          path: devops-category-two/eks-cluster/terraform.tfstate.d.zip
-
-      - name: Upload provider file
-        uses: actions/upload-artifact@v4
-        with:
-          name: eks-provider
-          path: devops-category-two/eks-cluster/provider.zip
-
-      - name: Upload state file lock
-        uses: actions/upload-artifact@v4
-        with:
-          name: eks-state-lock
-          path: devops-category-two/eks-cluster/.terraform.lock.hcl
 
       - name: Upload eks plan for approval
         uses: actions/upload-artifact@v4
@@ -85,6 +66,17 @@ jobs:
           additional-approved-words: ''
           additional-denied-words: ''
 
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v3
+
+      - name: Clone GitLab repository
+        env:
+          GITLAB_ACCESS_TOKEN: ${{ secrets.PAT }}
+        run: |
+          git clone -b feature/T-1112-terraform-eks https://oauth2:${{ secrets.PAT }}@gitlab.com/t4christ/devops-category-two.git
+          # If you want to move the repository to a specific directory, you can use:
+          # git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/<your-gitlab-username>/<your-gitlab-repo>.git <directory-name>
+
       - name: Terraform Auth Config
         run: |
               mkdir ~/.aws && touch ~/.aws/config ~/.aws/credentials
@@ -104,26 +96,9 @@ jobs:
         with:
           name: eks-plan
 
-      - name: Download eks-provider
-        uses: actions/download-artifact@v4
-        with:
-          name: eks-provider
-
-      - name: Download eks-state-lock
-        uses: actions/download-artifact@v4
-        with:
-          name: eks-state-lock
-
-      - name: Download eks-state
-        uses: actions/download-artifact@v4
-        with:
-          name: eks-state
 
       - name: Terraform Apply
         run: |
+          cd devops-category-two/eks-cluster
           terraform init
-          unzip terraform.tfstate.d.zip
-          unzip provider.zip
-          ls .terraform
-          ls -ah .
           terraform apply eks.plan
