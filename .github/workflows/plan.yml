@@ -10,16 +10,16 @@ jobs:
     outputs:
       output: ${{ steps.version.outputs.date }}
     steps:
-    - name: Checkout GitHub repository
-      uses: actions/checkout@v3
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v3
 
-    - name: Clone GitLab repository
-      env:
-        GITLAB_ACCESS_TOKEN: ${{ secrets.PAT }}
-      run: |
-        git clone https://oauth2:${PAT}@gitlab.com/t4christ/devops-category-two.git
-        # If you want to move the repository to a specific directory, you can use:
-        # git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/<your-gitlab-username>/<your-gitlab-repo>.git <directory-name>
+      - name: Clone GitLab repository
+        env:
+          GITLAB_ACCESS_TOKEN: ${{ secrets.PAT }}
+        run: |
+          git clone https://oauth2:${PAT}@gitlab.com/t4christ/devops-category-two.git
+          # If you want to move the repository to a specific directory, you can use:
+          # git clone https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/<your-gitlab-username>/<your-gitlab-repo>.git <directory-name>
 
       - name: Initialise Terraform
         run: |
