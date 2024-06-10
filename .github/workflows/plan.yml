@@ -100,5 +100,6 @@ jobs:
       - name: Terraform Apply
         run: |
           cd devops-category-two/eks-cluster
+          terraform workspace new dev
           terraform init
           terraform apply ../../eks.plan
