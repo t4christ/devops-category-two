@@ -35,8 +35,8 @@ jobs:
 
               cd devops-category-two/eks-cluster
               terraform workspace new dev
-              terraform init
-              
+              terraform init --reconfigure
+
               cat <<EOF > backend.tf
               terraform {
               backend "s3" {
