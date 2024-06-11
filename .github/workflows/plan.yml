@@ -47,9 +47,11 @@ jobs:
               }
               EOF
 
+              terraform init -reconfigure
+
               terraform workspace new dev
 
-              terraform init -reconfigure
+              
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
