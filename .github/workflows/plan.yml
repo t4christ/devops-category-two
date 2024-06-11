@@ -34,8 +34,6 @@ jobs:
               EOF
 
               cd devops-category-two/eks-cluster
-              terraform workspace new dev
-              terraform init --reconfigure
 
               cat <<EOF > backend.tf
               terraform {
@@ -48,6 +46,9 @@ jobs:
               }
               EOF
 
+              terraform workspace new dev
+
+              terraform init
               
               terraform fmt
               terraform validate
