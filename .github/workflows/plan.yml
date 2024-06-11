@@ -48,7 +48,7 @@ jobs:
 
               terraform init
 
-              terraform workspace new dev
+              # terraform workspace new dev
 
               
               terraform fmt
