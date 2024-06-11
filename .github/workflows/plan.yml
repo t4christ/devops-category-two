@@ -41,6 +41,7 @@ jobs:
               bucket = "ctwo-bucket"
               key    = "eks-tfstate"
               region = "us-east-1"
+              profile = "terraform-ctwo"
                   }
               }
               EOF
