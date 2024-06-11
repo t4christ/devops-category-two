@@ -129,7 +129,7 @@ jobs:
               }
           }
           EOF
-          # terraform init
+          terraform init
           terraform workspace select dev
           
           # unzip terraform.tfstate.d.zip
