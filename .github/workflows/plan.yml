@@ -34,7 +34,6 @@ jobs:
               EOF
 
               cd devops-category-two/eks-cluster
-              terraform init
 
               cat <<EOF > backend.tf
               terraform {
@@ -47,7 +46,7 @@ jobs:
               }
               EOF
 
-              terraform init -reconfigure
+              terraform init
 
               terraform workspace new dev
 
@@ -111,10 +110,10 @@ jobs:
         with:
           name: eks-plan
 
-      - name: Download eksstate
-        uses: actions/download-artifact@v4
-        with:
-          name: eks-state
+      # - name: Download eksstate
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: eks-state
 
       - name: Terraform Apply
         run: |
