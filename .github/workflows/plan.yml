@@ -130,7 +130,7 @@ jobs:
           }
           EOF
           # terraform init
-          terraform workspace switch dev
+          terraform workspace select dev
           
           # unzip terraform.tfstate.d.zip
           terraform destroy --auto-approve
