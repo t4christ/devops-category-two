@@ -35,11 +35,20 @@ jobs:
 
               cd devops-category-two/eks-cluster
               terraform workspace new dev
+              cat <<EOF > backend.tf
+              terraform {
+              backend "s3" {
+              bucket = "ctwo-bucket"
+              key    = "eks-tfstate"
+              region = "us-east-1"
+                  }
+              }
+              EOF
+
               terraform init
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
-              ls .
 
 
       - name: Upload eks plan for approval
@@ -106,13 +115,7 @@ jobs:
           cd devops-category-two/eks-cluster
           terraform workspace new dev
           terraform init
-          unzip terraform.tfstate.d.zip
-          terraform destroy --auto-approve
-          # terraform apply ../../eks.plan
+          # unzip terraform.tfstate.d.zip
+          # terraform destroy --auto-approve
+          terraform apply ../../eks.plan
           # zip terraform.tfstate.d.zip terraform.tfstate.d
-
-      - name: Upload eks artifact state for approval
-        uses: actions/upload-artifact@v4
-        with:
-          name: eks-state
-          path: devops-category-two/eks-cluster/terraform.tfstate.d.zip
