@@ -35,6 +35,8 @@ jobs:
 
               cd devops-category-two/eks-cluster
               terraform workspace new dev
+              terraform init
+              
               cat <<EOF > backend.tf
               terraform {
               backend "s3" {
@@ -46,7 +48,7 @@ jobs:
               }
               EOF
 
-              terraform init
+              
               terraform fmt
               terraform validate
               terraform plan --out eks.plan
