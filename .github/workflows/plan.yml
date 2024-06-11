@@ -120,15 +120,15 @@ jobs:
           cd devops-category-two/eks-cluster
 
           cat <<EOF > backend.tf
-              terraform {
-              backend "s3" {
-              bucket = "ctwo-bucket"
-              key    = "eks-tfstate"
-              region = "us-east-1"
-              profile = "terraform-ctwo"
-                  }
+          terraform {
+          backend "s3" {
+          bucket = "ctwo-bucket"
+          key    = "eks-tfstate"
+          region = "us-east-1"
+          profile = "terraform-ctwo"
               }
-              EOF
+          }
+          EOF
           # terraform init
           terraform workspace switch dev
           
