@@ -117,6 +117,8 @@ jobs:
 
       - name: Terraform Apply
         run: |
+          ls .
+          ls devops-category-two
           cd devops-category-two/eks-cluster
 
           cat <<EOF > backend.tf
