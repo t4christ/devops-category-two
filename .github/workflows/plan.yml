@@ -33,6 +33,8 @@ jobs:
               aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
               EOF
 
+              ls .
+              ls devops-category-two
               cd devops-category-two/eks-cluster
 
               cat <<EOF > backend.tf
@@ -117,8 +119,6 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          ls .
-          ls devops-category-two
           cd devops-category-two/eks-cluster
 
           cat <<EOF > backend.tf
