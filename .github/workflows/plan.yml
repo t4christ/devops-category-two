@@ -136,7 +136,7 @@ jobs:
           
           # unzip terraform.tfstate.d.zip
           # terraform destroy --auto-approve
-          terraform apply ../../eks.plan
+          terraform apply ../eks.plan
           # zip terraform.tfstate.d.zip terraform.tfstate.d
 
       - name: Configure Cluster
