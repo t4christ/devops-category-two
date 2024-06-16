@@ -35,7 +35,7 @@ jobs:
 
               ls .
               ls devops-category-two
-              cd devops-category-two/eks-cluster
+              cd devops-category-two
 
               cat <<EOF > backend.tf
               terraform {
@@ -119,7 +119,7 @@ jobs:
 
       - name: Terraform Apply
         run: |
-          cd devops-category-two/eks-cluster
+          cd devops-category-two
 
           cat <<EOF > backend.tf
           terraform {
