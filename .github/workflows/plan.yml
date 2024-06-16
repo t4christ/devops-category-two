@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: eks-plan
-          path: devops-category-two/eks-cluster/eks.plan
+          path: devops-category-two/eks.plan
 
   terraform_approve:
     name: Apply Terraform Plan
