@@ -1,8 +1,8 @@
 resource "aws_s3_bucket" "ctwo" {
-  bucket = "ctwo-bucket"
+  bucket = "devopstwo-bucket"
 
   tags = {
-    Name        = "ctwo-bucket"
+    Name        = "devopstwo-bucket"
     Environment = "Dev"
   }
 }
