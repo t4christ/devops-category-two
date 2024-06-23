@@ -100,10 +100,10 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"       
+        git config --global user.name 't4christ'
         git config --global user.email 't4christ@users.noreply.github.com'
         git add rustapp/values.yaml
         git commit -m 'Update values.yaml'
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.RUSTREPO_PAT }}
