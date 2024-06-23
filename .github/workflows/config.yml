@@ -70,6 +70,10 @@ jobs:
 
   update-helm-values:
     runs-on: ubuntu-latest
+    needs: [build-and-push-docker-image]
+    if: |
+      always() && 
+      (needs.build-and-push-docker-image.result == 'success')
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -90,6 +94,7 @@ jobs:
 
     - name: Update Helm values
       run: |
+        ls .
         yq eval '.image.repository = texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}' -i ./rustapp/values.yaml
 
     - name: Commit and push changes
