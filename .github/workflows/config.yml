@@ -97,7 +97,7 @@ jobs:
     - name: Update Helm values
       run: |
         ls .
-        yq eval '.image.repository = texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}' -i rustapp/values.yaml
+        yq eval '.image.repository = 3' -i rustapp/values.yaml
 
     - name: Commit and push changes
       run: |
