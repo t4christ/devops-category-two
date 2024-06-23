@@ -5,75 +5,75 @@ on:
     branches: [feature/T-5589-build-rust]
     
 jobs:
-  build-and-push-docker-image:
-    name: Build Docker image and push to repositories
-    runs-on: ubuntu-latest
-    outputs:
-      output: ${{ steps.version.outputs.date }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  # build-and-push-docker-image:
+  #   name: Build Docker image and push to repositories
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     output: ${{ steps.version.outputs.date }}
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      # - name: Create env for rust app
-      #   run: |
-      #         cat <<-EOF > .env
-      #         DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
-      #         POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
-      #         POSTGRES_USER=${{ secrets.RUST_USER }}
-      #         EOF
+  #     # - name: Create env for rust app
+  #     #   run: |
+  #     #         cat <<-EOF > .env
+  #     #         DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
+  #     #         POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
+  #     #         POSTGRES_USER=${{ secrets.RUST_USER }}
+  #     #         EOF
 
-      # - name: SonarQube Scan
-      #   uses: sonarsource/sonarqube-scan-action@master
-      #   with:
-      #     args: >
-      #       -Dsonar.rust.clippy.reportPaths=sample-report.json
-      #       -Dsonar.verbose=true
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #     # - name: SonarQube Scan
+  #     #   uses: sonarsource/sonarqube-scan-action@master
+  #     #   with:
+  #     #     args: >
+  #     #       -Dsonar.rust.clippy.reportPaths=sample-report.json
+  #     #       -Dsonar.verbose=true
+  #     #   env:
+  #     #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #     #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Get current date
-        id: version
-        run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
+  #     - name: Get current date
+  #       id: version
+  #       run: echo "date=$(date +'%Y-%m-%d-%s')" >> $GITHUB_OUTPUT 
 
-      - name: Set Docker Build
-        uses: docker/setup-buildx-action@v3
+  #     - name: Set Docker Build
+  #       uses: docker/setup-buildx-action@v3
 
-      - name: Build docker image
-        run: |
-            docker build  -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+  #     - name: Build docker image
+  #       run: |
+  #           docker build  -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
-      # - name: Run Trivy vulnerability scanner
-      #   uses: aquasecurity/trivy-action@master
-      #   with:
-      #     image-ref: texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
-      #     format: 'table'
-      #     exit-code: '1'
-      #     ignore-unfixed: true
-      #     vuln-type: '*'
-      #     severity: 'CRITICAL'
+  #     # - name: Run Trivy vulnerability scanner
+  #     #   uses: aquasecurity/trivy-action@master
+  #     #   with:
+  #     #     image-ref: texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
+  #     #     format: 'table'
+  #     #     exit-code: '1'
+  #     #     ignore-unfixed: true
+  #     #     vuln-type: '*'
+  #     #     severity: 'CRITICAL'
 
-      # - name: Run test on docker container
-      #   run: |
-      #     # chmod +x test-container.sh
-      #     python3 test-container.py
+  #     # - name: Run test on docker container
+  #     #   run: |
+  #     #     # chmod +x test-container.sh
+  #     #     python3 test-container.py
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASS }}
+  #     - name: Login to DockerHub
+  #       uses: docker/login-action@v2
+  #       with:
+  #         username: ${{ secrets.DOCKER_USER }}
+  #         password: ${{ secrets.DOCKER_PASS }}
 
-      - name: Push docker image to dockerhub
-        run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
+  #     - name: Push docker image to dockerhub
+  #       run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
 
   update-helm-values:
     runs-on: ubuntu-latest
     needs: [build-and-push-docker-image]
-    if: |
-      always() && 
-      (needs.build-and-push-docker-image.result == 'success')
+    # if: |
+    #   always() && 
+    #   (needs.build-and-push-docker-image.result == 'success')
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
@@ -95,7 +95,7 @@ jobs:
     - name: Update Helm values
       run: |
         ls .
-        yq eval '.image.repository = texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}' -i ./rustapp/values.yaml
+        yq eval '.image.repository = texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}' -i rustapp/values.yaml
 
     - name: Commit and push changes
       run: |
