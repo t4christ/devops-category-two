@@ -16,23 +16,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Create env for rust app
-      #   run: |
-      #         cat <<-EOF > .env
-      #         DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
-      #         POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
-      #         POSTGRES_USER=${{ secrets.RUST_USER }}
-      #         EOF
+      - name: Create env for rust app
+        run: |
+              cat <<-EOF > .env
+              DATABASE_URL=postgresql://${{ secrets.RUST_USER }}:${{ secrets.RUST_PASS }}@${{ secrets.RUST_HOST }}:5432/${{ secrets.RUST_DB }}
+              POSTGRES_PASSWORD=${{ secrets.RUST_PASS }}
+              POSTGRES_USER=${{ secrets.RUST_USER }}
+              EOF
 
-      # - name: SonarQube Scan
-      #   uses: sonarsource/sonarqube-scan-action@master
-      #   with:
-      #     args: >
-      #       -Dsonar.rust.clippy.reportPaths=sample-report.json
-      #       -Dsonar.verbose=true
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        with:
+          args: >
+            -Dsonar.rust.clippy.reportPaths=sample-report.json
+            -Dsonar.verbose=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Get current date
         id: version
@@ -46,20 +46,20 @@ jobs:
             docker build  -t texplode/rusttaskctwo:${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
-      # - name: Run Trivy vulnerability scanner
-      #   uses: aquasecurity/trivy-action@master
-      #   with:
-      #     image-ref: texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
-      #     format: 'table'
-      #     exit-code: '1'
-      #     ignore-unfixed: true
-      #     vuln-type: '*'
-      #     severity: 'CRITICAL'
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: texplode/rusttaskctwo:${{ github.run_id }}
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: '*'
+          severity: 'CRITICAL'
 
-      # - name: Run test on docker container
-      #   run: |
-      #     # chmod +x test-container.sh
-      #     python3 test-container.py
+      - name: Run test on docker container
+        run: |
+          chmod +x test-container.sh
+          ./test-container.sh
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
