@@ -41,8 +41,7 @@ jobs:
 
       - name: Build docker image
         run: |
-            docker buildx create --name armbuilder
-            docker buildx build --platform linux/arm64 -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+            docker build  -t texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       # - name: Run Trivy vulnerability scanner
@@ -68,3 +67,37 @@ jobs:
 
       - name: Push docker image to dockerhub
         run: docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
+
+  update-helm-values:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+      with:
+        repository: t4christ/rusthelm
+        ref: feature/T-2233-rust-helm
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    
+    - name: Install yq (for YAML processing)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install yq
+
+    - name: Update Helm values
+      run: |
+        yq eval '.image.repository = texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}' -i ./rustapp/values.yaml
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add ./rustapp/values.yaml
+        git commit -m 'Update values.yaml'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
