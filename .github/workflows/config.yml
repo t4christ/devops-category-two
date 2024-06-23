@@ -43,7 +43,7 @@ jobs:
 
       - name: Build docker image
         run: |
-            docker build  -t texplode/rusttaskctwo:${{ steps.version.outputs.date }}-${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
+            docker build  -t texplode/rusttaskctwo:${{ github.run_id }} -f infrastructure/docker/app/api.dockerfile .
 
 
       # - name: Run Trivy vulnerability scanner
@@ -103,7 +103,7 @@ jobs:
     - name: Update Helm values
       run: |
         yq -i -y '.image.repository = "texplode/rusttaskctwo"' rustapp/values.yaml
-        yq -i -y '.image.tag = ${{ steps.version.outputs.date }}-${{ github.run_id }}' rustapp/values.yaml
+        yq -i -y '.image.tag = ${{ github.run_id }}' rustapp/values.yaml
 
 
     - name: Commit and push changes
