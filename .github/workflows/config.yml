@@ -96,15 +96,13 @@ jobs:
 
     - name: Update Helm values
       run: |
-        ls rustapp
-        cp rustapp/values.yaml values.yaml
-        yq -i -y '.image.repository = 3' values.yaml
+        yq -i -y '.image.repository = 3' rustapp/values.yaml
 
     - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add ./rustapp/values.yaml
+        git add rustapp/values.yaml
         git commit -m 'Update values.yaml'
         git push
       env:
