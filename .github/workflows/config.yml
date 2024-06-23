@@ -67,7 +67,7 @@ jobs:
 
       - name: Push docker image to dockerhub
         run: |
-        ls .
+          ls .
         # docker push texplode/rusttaskcone:${{ steps.version.outputs.date }}-${{ github.run_id }}
 
   update-helm-values:
