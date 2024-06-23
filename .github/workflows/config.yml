@@ -96,8 +96,8 @@ jobs:
 
     - name: Update Helm values
       run: |
-        ls .
-        yq eval '.image.repository = 3' -i rustapp/values.yaml
+        ls rustapp
+        yq e -i '.image.repository = "3"' rustapp/values.yaml
 
     - name: Commit and push changes
       run: |
