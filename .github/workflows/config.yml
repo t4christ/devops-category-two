@@ -98,7 +98,7 @@ jobs:
       run: |
         ls rustapp
         cp rustapp/values.yaml values.yaml
-        yq -i '.image.repository = 3' values.yaml
+        yq -i -y '.image.repository = 3' values.yaml
 
     - name: Commit and push changes
       run: |
