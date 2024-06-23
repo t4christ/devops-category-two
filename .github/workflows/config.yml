@@ -105,5 +105,5 @@ jobs:
         git add rustapp/values.yaml
         git commit -m 'Update values.yaml'
         git push https://t4christ@github.com/t4christ/rusthelm.git
-      env:
-        GITHUB_TOKEN: ${{ secrets.RUSTREPO_PAT }}
+      # env:
+      #   GITHUB_TOKEN: ${{ secrets.RUSTREPO_PAT }}
