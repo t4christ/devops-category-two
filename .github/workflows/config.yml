@@ -106,5 +106,5 @@ jobs:
         git config --global user.name 't4christ'
         git config --global user.email 't4christ@users.noreply.github.com'
         git add rustapp/values.yaml
-        git remote -v
+        git commit -m "update values.yaml"
         git push origin feature/T-2233-rust-helm
