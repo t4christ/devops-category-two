@@ -69,7 +69,7 @@ jobs:
 
       - name: Push docker image to dockerhub
         run: |
-          docker push texplode/rusttaskctwo:${{ steps.version.outputs.date }}-${{ github.run_id }}
+          docker push texplode/rusttaskctwo:${{ github.run_id }}
 
   update-helm-values:
     runs-on: ubuntu-latest
