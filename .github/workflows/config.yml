@@ -84,6 +84,7 @@ jobs:
       with:
         repository: t4christ/rusthelm
         ref: feature/T-2233-rust-helm
+        token:  ${{ secrets.RUSTREPO_PAT }}
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -101,9 +102,8 @@ jobs:
         yq -i -y '.image.repository = 3' rustapp/values.yaml
 
     - name: Commit and push changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        git config --unset-all http.https://github.com/.extraheader
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add rustapp/values.yaml
