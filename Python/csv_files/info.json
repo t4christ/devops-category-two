@@ -1,0 +1,128 @@
+# Javascript Object Notation JSAON
+Express data n human readbale format ie Key:Value pairs
+1. Objects are represented in curly braces {}
+{
+    "name": "John Doe",
+    "age": 30
+}
+
+2. Arrays are represented bu square brackets []
+"skills": ["Python", "JavaScript", "SQL"]
+
+3.Key-value pairs
+"name": "John Doe"
+
+4.Values can be stings,numbers,booleans,null,objects, or arrays
+"age": 30,
+"isEmployed": true,
+"address": {
+    "street": "123 Main St",
+    "city": "Anytown"
+}
+
+Example of a complex JSON File
+{
+    "employees": [
+        {
+            "firstName": "John",
+            "lastName": "Doe",
+            "age": 30,
+            "email": "john.doe@example.com"
+        },
+        {
+            "firstName": "Anna",
+            "lastName": "Smith",
+            "age": 25,
+            "email": "anna.smith@example.com"
+        }
+    ],
+    "company": {
+        "name": "Tech Solutions",
+        "location": "Silicon Valley"
+    }
+}
+
+THIS STRUCTURE MAKES JSON A VERSATILE AND WIDELY USED FORMAT FOR DATA INTERCHANGE BETWEEN SYSTEMS AND PROGRAMMING LANGUAGES.
+
+WHAT IT MEASNS TO PARSE JSON DATA
+
+Parsing JSON data in python means converting a JSON-formatted string into
+a python data structure, such as dictionary or a list.
+This allows to work with the data in your python code.
+
+      STEPS TO PARSE
+
+    1. Import json module as it provides functions to parse JSON data
+    2. Use json.loads(): This functions takes a json string and convert into python dictionary or list.
+    EXAMPLE:
+
+    JSON String:
+    {
+        "name": "John Doe",
+        "age": 30,
+        "isEmployed": true,
+        "address": {
+            "street": "123 Main St",
+            "city": "Anytown",
+            "state": "CA",
+            "postalCode": "12345"
+        },
+        "phoneNumbers": [
+            {
+                "type": "home",
+                "number": "555-555-5555"
+            },
+            {
+                "type": "work",
+                "number": "555-555-5556"
+            }
+        ],
+        "email": "john.doe@example.com",
+        "skills": ["Python", "JavaScript", "SQL"]
+    }
+
+    TO PARSE THE ABOVE JSON String 
+    
+    import json
+
+# JSON string
+json_string = '''
+{
+    "name": "John Doe",
+    "age": 30,
+    "isEmployed": true,
+    "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "postalCode": "12345"
+    },
+    "phoneNumbers": [
+        {
+            "type": "home",
+            "number": "555-555-5555"
+        },
+        {
+            "type": "work",
+            "number": "555-555-5556"
+        }
+    ],
+    "email": "john.doe@example.com",
+    "skills": ["Python", "JavaScript", "SQL"]
+}
+'''
+
+# Parse the JSON string
+data = json.loads(json_string)
+
+# Now `data` is a Python dictionary
+print(data)
+
+
+THE BASIC OPERATIONS NEEDED TO INTERRACT WITH JSON FILES IN PYTHON:
+
+    1. json.load(): Reading json from a file
+    2. json.dump(): Writing json to a file
+    3. json.loads(): Reading json from a string
+    4. json.dumps(): Writing json to a string
+
